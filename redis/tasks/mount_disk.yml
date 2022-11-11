@@ -1,0 +1,21 @@
+ - name: Create ext4 filesystem(s)
+    filesystem:
+      fstype: ext4
+      dev: '{{ item.device }}'
+    with_items: '{{ disks }}'
+
+  - name: Mount
+    mount:
+      path: "{{ item.mntpoint }}"
+      src: "{{ item.device }}"
+      opts: defaults
+      fstype: ext4
+      state: mounted
+    with_items: '{{ disks }}'
+
+  - name: "setup Redis  mounts"
+    command: "{{ item }}"
+    loop:
+      - "mkdir -p {{data_dir}}"
+      - "chown -R redis: redis {{data_dir}}"
+

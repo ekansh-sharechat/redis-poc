@@ -1,0 +1,7 @@
+---
+- name: Install build time dependencies and update repo
+  apt:
+    name: "build-essential"
+    state: present
+    update_cache: yes
+ 
